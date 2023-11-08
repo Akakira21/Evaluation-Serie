@@ -6,7 +6,7 @@ import { Suspense, useState } from "react"
 
 function App() {
 
-  const [user, setUser] = useState(0)
+  const [user, setUser] = useState(-1)
 
   return (
     <div className={`d-flex flex-column ${styles.appContainer}`}>

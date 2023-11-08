@@ -9,6 +9,7 @@ const Favorites = lazy(() => import('./pages/Profile/Favorites/Favorites'))
 const Login = lazy(() => import('./pages/Forms/Login/Login'))
 const Register = lazy(() => import('./pages/Forms/Register/Register'))
 const SerieDetails = lazy(() => import('./pages/SerieDetails/SerieDetails'))
+const AdminPanel = lazy(() => import('./pages/AdminPanel/AdminPanel'))
 
 export const router = createBrowserRouter([
     {
@@ -42,6 +43,11 @@ export const router = createBrowserRouter([
             {
                 path: "/seriedetails",
                 element: <SerieDetails />,
+        
+            },
+            {
+                path: "/adminpanel",
+                element: <AdminPanel />,
         
             },
         ]
