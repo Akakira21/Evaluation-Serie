@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styles from "../Register/Register.module.scss";
+import { signin } from "../../../apis/users";
 
 export default function Login() {
   const [feedback, setFeedback] = useState("");
@@ -43,15 +44,7 @@ export default function Login() {
     setFeedback("");
     console.log(values);
     try {
-      const response = await fetch("http://localhost:8000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      if (response.ok) {
-        const user = await response.json();
+      const response = await signin(values);
         if (user.message) {
           setFeedback(user.message);
         } else {
@@ -63,7 +56,6 @@ export default function Login() {
             navigate("/")
           }, 3000);
         }
-      }
     } catch (error) {
       console.error(error);
     }

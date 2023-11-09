@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Register.module.scss";
+import { signup } from "../../../apis/users";
 
 export default function Register({ changeView }) {
   const [feedback, setFeedback] = useState("");
@@ -68,22 +69,16 @@ export default function Register({ changeView }) {
     }
     console.log(formData);
     try {
-      let response = await fetch("http://localhost:8000/register", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        const messageFromApi = await response.json();
-        if (messageFromApi.message) {
-          setFeedback(messageFromApi.message);
+      const response = await signup(formData);
+        if (response.message) {
+          setFeedback(response.message);
         } else {
-          setFeedbackGood(messageFromApi.messageGood);
+          setFeedbackGood(response.messageGood);
           reset(defaultValues);
           setTimeout(() => {
             navigate("/login");
           }, 3000);
         }
-      }
     } catch (error) {
       console.error(error);
     }
