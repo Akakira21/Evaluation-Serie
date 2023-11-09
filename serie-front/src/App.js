@@ -6,13 +6,14 @@ import { Suspense, useState } from "react"
 
 function App() {
 
-  const [user, setUser] = useState(-1)
+  const [user, setUser] = useState(0)
+  const [admin, setAdmin] = useState(0)
 
   return (
     <div className={`d-flex flex-column ${styles.appContainer}`}>
-      <Header user={ user } setUser= { setUser } />
+      <Header user={ user } setUser= { setUser } admin={ admin } setAdmin={ setAdmin } />
       <Suspense>
-        <Outlet context={[ user, setUser ]}/>
+        <Outlet context={[ user, setUser, admin, setAdmin ]}/>
       </Suspense>
       <Footer />
     </div>

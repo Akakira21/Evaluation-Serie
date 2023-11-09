@@ -5,14 +5,14 @@ import MobileMenu from "./components/MobileMenu";
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 
-export default function Header( { user, setUser } ) {
+export default function Header( { user, setUser, admin, setAdmin } ) {
 
 
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
 function deconnexion() {
-        setUser(-1);
+        setUser(0);
         // TypeError: setUser is not a function
         navigate("/");
     }
@@ -25,86 +25,82 @@ function deconnexion() {
         </NavLink>
       </div>
 
-        {user === -1 ? (
-          <>
+      {user === 0 ? (
 
-            <ul className={`${styles.desktopHeader}`}>
-              <NavLink end to="/login" className={`mr10 tdn `}>
-                <button className="mr10 btn btn-primary-reverse">
-                  <i className="fas fa-right-to-bracket mr10"></i>
-                  <span>Login</span>
-                </button>
-              </NavLink>
+          <ul className={`${styles.desktopHeader}`}>
+            <NavLink end to="/login" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">
+                <i className="fas fa-right-to-bracket mr10"></i>
+                <span>Login</span>
+              </button>
+            </NavLink>
 
-              <NavLink end to="/register" className={`mr10 tdn `}>
-                <button className="mr10 btn btn-primary-reverse">
-                  <span>Register</span>
-                </button>
-              </NavLink>
-            </ul>
+            <NavLink end to="/register" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">
+                <span>Register</span>
+              </button>
+            </NavLink>
+          </ul>
 
-          </>
+      ):(
+
+        admin === 0 ? (
+
+          <ul className={`${styles.desktopHeader}`}>
+            <NavLink end to="/profile" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">
+                <i className="fa-solid fa-user mr10"></i>
+                <span>Profile</span>
+              </button>
+            </NavLink>
+
+            <NavLink end to="/favorites" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">
+                <i className="fa-solid fa-heart mr10"></i>
+                <span>Favorites</span>
+              </button>
+            </NavLink>
+
+            <button className="mr10 btn btn-primary-reverse" onClick={() => deconnexion()}>                    
+            <i className="fa-solid fa-right-from-bracket mr10"></i>
+            <span>Déconnexion</span>
+            </button>   
+          </ul>
+
         ):(
-          <>
-            {user === 1 ? (
-              <>
-              
-                <NavLink end to="/profile" className={`mr10 tdn `}>
-                  <button className="mr10 btn btn-primary-reverse">
-                    <i className="fa-solid fa-user mr10"></i>
-                    <span>Profile</span>
-                  </button>
-                </NavLink>
 
-                <NavLink end to="/favorites" className={`mr10 tdn `}>
-                  <button className="mr10 btn btn-primary-reverse">
-                    <i className="fa-solid fa-heart mr10"></i>
-                    <span>Favorites</span>
-                  </button>
-                </NavLink>
+          <ul className={`${styles.desktopHeader}`}>
+            <NavLink end to="/profile" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">
+                <i className="fa-solid fa-user mr10"></i>
+                <span>Profile</span>
+              </button>
+            </NavLink>
 
-                <NavLink end to="/adminpanel" className={`mr10 tdn `}>
-                  <button className="mr10 btn btn-primary-reverse">                    
-                  <i className="fa-solid fa-lock mr10"></i>
-                    <span>Admin Panel</span>
-                  </button>
-                </NavLink>
+            <NavLink end to="/favorites" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">
+                <i className="fa-solid fa-heart mr10"></i>
+                <span>Favorites</span>
+              </button>
+            </NavLink>
 
-                <button className="mr10 btn btn-primary-reverse" onClick={() => deconnexion()}>                    
-                  <i className="fa-solid fa-right-from-bracket mr10"></i>
-                  <span>Déconnexion</span>
-                </button>
+            <NavLink end to="/adminpanel" className={`mr10 tdn `}>
+              <button className="mr10 btn btn-primary-reverse">                    
+              <i className="fa-solid fa-lock mr10"></i>
+                <span>Admin Panel</span>
+              </button>
+            </NavLink>
 
-              </>
-            ):(
-              <>
-              
-                <NavLink end to="/profile" className={`mr10 tdn `}>
-                  <button className="mr10 btn btn-primary-reverse">
-                    <i className="fa-solid fa-user mr10"></i>
-                    <span>Profile</span>
-                  </button>
-                </NavLink>
+            <button className="mr10 btn btn-primary-reverse" onClick={() => deconnexion()}>                    
+              <i className="fa-solid fa-right-from-bracket mr10"></i>
+              <span>Déconnexion</span>
+            </button>
+          </ul>
 
-                <NavLink end to="/favorites" className={`mr10 tdn `}>
-                  <button className="mr10 btn btn-primary-reverse">
-                    <i className="fa-solid fa-heart mr10"></i>
-                    <span>Favorites</span>
-                  </button>
-                </NavLink>
+        )
 
-                <button className="mr10 btn btn-primary-reverse" onClick={() => deconnexion()}>
-                  <i className="fa-solid fa-right-from-bracket mr10"></i>
-                  <span>Déconnexion</span>
-                </button>
-
-              </>
-            )}
-
-          </>
-        )}
-
-
+      )}
+     
       <i
         onClick={() => setShowMenu(true)}
         className={`fas fa-bars mr10 ${styles.mobileHeader}`}

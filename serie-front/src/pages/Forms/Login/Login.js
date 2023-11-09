@@ -9,7 +9,8 @@ export default function Login() {
   const [feedback, setFeedback] = useState("");
   const [feedbackGood, setFeedbackGood] = useState("");
   const navigate = useNavigate();
-  const [user, setUser] = useOutletContext();
+  const [user, setUser, admin, setAdmin] = useOutletContext();
+//   const [admin, setAdmin] = useOutletContext();
 
   const yupSchema = yup.object({
     email: yup
@@ -51,14 +52,13 @@ export default function Login() {
       });
       if (response.ok) {
         const user = await response.json();
-        console.log(user);
         if (user.message) {
           setFeedback(user.message);
         } else {
           reset(defaultValues);
           setFeedbackGood("Connexion réussi. Vous allez être redirigé");
           setUser(user.id);
-          console.log(user);
+          setAdmin(user.admin)
           setTimeout(() => {
             navigate("/")
           }, 3000);

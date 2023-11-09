@@ -101,7 +101,8 @@ app.post("/login", (req, res) => {
       if (passwordMatch) {
         isEmail = {
           messageGood: "Connexion réussie ! Vous allez être redirigé(e)",
-          id: result[0].id,
+          id: result[0].idUser,
+          admin: result[0].admin
         };
       } else {
         isEmail = { message: "Email et/ou mot de passe incorrects !" };
