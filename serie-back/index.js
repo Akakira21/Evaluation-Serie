@@ -112,6 +112,25 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.get("/getUser/:id", (req, res) => {
+  console.log(req.params);
+  let id = req.params.id;
+  const sql = "SELECT pseudo, email, avatar FROM users where id= ?";
+  connection.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    res.status(200).json(result[0]);
+  });
+});
+
+app.get("/getSeries", (req, res) => {
+  const sql = "SELECT * FROM series";
+  connection.query(sql, (err, result) => {
+    if (err) throw err;
+    console.log("Séries récupérées");
+    res.json(result);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Serveur écoutant sur le port ${port}`);
 });

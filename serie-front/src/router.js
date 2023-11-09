@@ -2,6 +2,7 @@ import { lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage'
 import App from './App'
+import { combinedLoader } from './loaders';
 
 const Homepage = lazy(() => import('./pages/Homepage/Homepage'))
 const Profile = lazy(() => import('./pages/Profile/Profile'))
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
+        // loader: combinedLoader,
         errorElement: <ErrorPage />, 
         children: [
             {

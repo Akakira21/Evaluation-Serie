@@ -11,7 +11,6 @@ export default function Login() {
   const [feedbackGood, setFeedbackGood] = useState("");
   const navigate = useNavigate();
   const [user, setUser, admin, setAdmin] = useOutletContext();
-//   const [admin, setAdmin] = useOutletContext();
 
   const yupSchema = yup.object({
     email: yup
