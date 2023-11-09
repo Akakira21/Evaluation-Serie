@@ -87,6 +87,30 @@ app.post("/register", upload.single("avatar"), async (req, res) => {
   });
 });
 
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  const sqlVerifyMail = "Select idUser, password, admin FROM users WHERE email=?";
+  connection.query(sqlVerifyMail, [email], async (err, result) => {
+    if (err) throw err;
+    let isEmail;
+    if (result.length === 0) {
+      isEmail = { message: "Email et/ou mot de passe incorrects !" };
+    } else {
+      const dbPassword = result[0].password;
+      const passwordMatch = await bcrypt.compare(password, dbPassword);
+      if (passwordMatch) {
+        isEmail = {
+          messageGood: "Connexion réussie ! Vous allez être redirigé(e)",
+          id: result[0].id,
+        };
+      } else {
+        isEmail = { message: "Email et/ou mot de passe incorrects !" };
+      }
+    }
+    res.status(200).json(isEmail);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Serveur écoutant sur le port ${port}`);
 });

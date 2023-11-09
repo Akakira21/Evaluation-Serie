@@ -5,14 +5,14 @@ import MobileMenu from "./components/MobileMenu";
 import { NavLink } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 
-export default function Header( {user, setUser} ) {
+export default function Header( { user, setUser } ) {
 
 
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
 function deconnexion() {
-        // setUser(-1);
+        setUser(-1);
         // TypeError: setUser is not a function
         navigate("/");
     }

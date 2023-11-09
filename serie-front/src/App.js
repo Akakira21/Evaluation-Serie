@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className={`d-flex flex-column ${styles.appContainer}`}>
-      <Header user={ user }/>
+      <Header user={ user } setUser= { setUser } />
       <Suspense>
         <Outlet context={[ user, setUser ]}/>
       </Suspense>
