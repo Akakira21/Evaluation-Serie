@@ -68,7 +68,7 @@ export default function Homepage() {
               .filter((serie) => serie.title.toLowerCase().includes(filter))
               .map((serie) => (
                 <Serie
-                  key={serie.idSerie}
+                  key={serie.idSerie} 
                   serie={serie}
                   updateSeries={updateSeries}
                   deleteSeries={deleteSeries}

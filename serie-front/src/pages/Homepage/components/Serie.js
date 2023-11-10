@@ -1,6 +1,6 @@
 import styles from "./Serie.module.scss";
 
-export default function Serie({ serie, updateSeries, deleteSerie }) {
+export default function Serie({ serie, updateSeries, deleteSeries }) {
   const { idSerie, title, poster } = serie;
   console.log(serie);
 
@@ -27,15 +27,19 @@ export default function Serie({ serie, updateSeries, deleteSerie }) {
   // };
 
   async function handleDelete() {
+    console.log("Serie handleDelete");
+    console.log(idSerie);
     try {
       const response = await fetch(
-        `http://localhost:8000/api/series/deleteSerie/${idSerie}`,
+        `http://localhost:8000/deleteSerie`,
         {
           method: "DELETE",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({"idSerie": idSerie}),
         }
       );
       if (response.ok) {
-        deleteSerie(idSerie);
+        deleteSeries(idSerie);
       }
     } catch (error) {
       console.error(error);

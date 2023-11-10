@@ -172,8 +172,9 @@ app.post("/addSerie", upload.single("poster"), async (req, res) => {
   });
 });
 
-app.delete("/deleteSeries", (req, res) => {
+app.delete("/deleteSerie", (req, res) => {
   const { idSerie } = req.body;
+  console.log("DeleteSerie", req.body);
   const sqlDelete = "DELETE FROM series WHERE idSerie = ?";
   connection.query(sqlDelete, idSerie, (err, result) => {
     if (err) throw err;
