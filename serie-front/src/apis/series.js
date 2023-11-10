@@ -1,8 +1,8 @@
-export async function addSerie(values) {
+export async function addSerie(formData) {
   try {
     const response = await fetch("http://localhost:8000/addSerie", {
       method: "POST",
-      body: values,
+      body: formData,
     });
     const body = await response.json();
     if (response.ok) {
@@ -11,7 +11,7 @@ export async function addSerie(values) {
       if (body) {
         throw body;
       } else {
-        throw new Error("Error register");
+        throw new Error("Error add");
       }
     }
   } catch (error) {

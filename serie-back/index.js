@@ -14,7 +14,7 @@ const upload = multer({
     },
   }),
   limits: {
-    fileSize: 80000,
+    fileSize: 10000000,
   },
   fileFilter: (req, file, cb) => {
     console.log(file);
@@ -128,6 +128,47 @@ app.get("/getSeries", (req, res) => {
     if (err) throw err;
     console.log("Séries récupérées");
     res.json(result);
+  });
+});
+
+app.post("/addSerie", upload.single("poster"), async (req, res) => {
+  let poster;
+  if (req.file === undefined) {
+    poster = null;
+  } else {
+    poster = req.file.filename;
+  }
+  const { title, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country } = req.body;
+  const sqlVerify = "SELECT * FROM series WHERE title= ?";
+  connection.query(sqlVerify, [title], (err, result) => {
+    if (err) throw err;
+    if (result.length) {
+      let isTitle = { message: "Titre déjà existant" };
+      if (poster) {
+        const filePath = path.join(__dirname, "/upload");
+        fs.unlink(filePath, (err) => { 
+          if (err) {
+            console.log("Erreur suppression fichier");
+          }
+          console.log("Fichier supprimé");
+        });
+      }
+      res.status(200).json(isTitle);
+    } else {
+      const sqlInsert =
+        "INSERT INTO series (title, poster, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      connection.query(
+        sqlInsert,
+        [title, poster, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country],
+        (err, result) => {
+          if (err) throw err;
+          let isTitle = {
+            messageGood: "Ajout réussie !",
+          };
+          res.status(200).json(isTitle);
+        }
+      );
+    }
   });
 });
 

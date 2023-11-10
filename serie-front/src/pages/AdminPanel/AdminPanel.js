@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import styles from './AdminPanel.module.scss'
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { addSerie } from '../../apis/series';
@@ -7,6 +8,7 @@ const AdminPanel = () => {
 
     const [feedback, setFeedback] = useState("");
     const [feedbackGood, setFeedbackGood] = useState("");
+    const posterRef = useRef();
   
 
     const defaultValues = {
@@ -14,7 +16,7 @@ const AdminPanel = () => {
         poster: "",
         year: "",
         resume: "",
-        numberSeason: false,
+        numberSeason: "",
         still: "",
         imdbNote: "",
         sensCritiqueNote: "",
@@ -34,10 +36,13 @@ const AdminPanel = () => {
 
       async function submit() {
         setFeedback("");
+        console.log("Submit", posterRef.current.files[0]);
         const values = getValues();
         const formData = new FormData();
         formData.append("title", values.title);
-        formData.append("poster", values.poster);
+        if (posterRef.current && posterRef.current.files[0]) {
+            formData.append("poster", posterRef.current.files[0]);
+          }
         formData.append("year", values.year);
         formData.append("resume", values.resume);
         formData.append("numberSeason", values.numberSeason);
@@ -63,7 +68,7 @@ const AdminPanel = () => {
     return (
         <div>
             <h1>Admin Panel</h1>
-            <form>
+            <form onSubmit={handleSubmit(submit)}>
 
                 <div className="d-flex flex-column mb20">
                     <label htmlFor="title" className="mb10">
@@ -79,7 +84,7 @@ const AdminPanel = () => {
                     <label htmlFor="poster" className="mb10">
                         Poster : 
                     </label>
-                    <input {...register("poster")} type="file" id="poster" />
+                    <input ref={posterRef} type="file" id="poster" />
                     {errors?.poster && (
                     <p className="text-error">{errors.username.message}</p>
                     )}
@@ -154,6 +159,12 @@ const AdminPanel = () => {
                     <p className="text-error">{errors.username.message}</p>
                     )}
                 </div>
+
+                <button className="btn btn-primary">Submit</button>
+                {feedback && <p className={`${styles.feedback}`}>{feedback}</p>}
+                {feedbackGood && (
+                <p className={`${styles.feedbackGood}`}>{feedbackGood}</p>
+                )}
 
             </form>
         </div>
