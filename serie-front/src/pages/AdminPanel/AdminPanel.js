@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import styles from './AdminPanel.module.scss'
 import AddSerie from './Components/AddSerie';
 import { useState } from 'react';
+import ModifySerie from './Components/ModifySerie';
 
 const AdminPanel = () => {
 
@@ -22,7 +23,7 @@ const AdminPanel = () => {
                         <>
 
                             <button type='button' onClick={() => setButton(0)}> Close </button>
-                            <p>Modify Show</p>
+                            <ModifySerie />
 
                         </>
                     ):(
