@@ -172,6 +172,16 @@ app.post("/addSerie", upload.single("poster"), async (req, res) => {
   });
 });
 
+app.delete("/deleteSeries", (req, res) => {
+  const { idSerie } = req.body;
+  const sqlDelete = "DELETE FROM series WHERE idSerie = ?";
+  connection.query(sqlDelete, idSerie, (err, result) => {
+    if (err) throw err;
+    console.log("Série effacée");
+    res.status(200).json({ message: "Delete ok"});
+  });
+});
+
 app.listen(port, () => {
   console.log(`Serveur écoutant sur le port ${port}`);
 });

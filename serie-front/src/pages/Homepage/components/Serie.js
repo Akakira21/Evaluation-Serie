@@ -1,6 +1,6 @@
 import styles from "./Serie.module.scss";
 
-export default function Serie({ serie, updateSeries, deleteSeries }) {
+export default function Serie({ serie, updateSeries, deleteSerie }) {
   const { idSerie, title, poster } = serie;
   console.log(serie);
 
@@ -26,26 +26,26 @@ export default function Serie({ serie, updateSeries, deleteSeries }) {
   //   }
   // };
 
-  // async function handleDelete() {
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:8000/api/series/deleteSeries/${id}`,
-  //       {
-  //         method: "DELETE",
-  //       }
-  //     );
-  //     if (response.ok) {
-  //       deleteSeries(id);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
+  async function handleDelete() {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/series/deleteSerie/${idSerie}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        deleteSerie(idSerie);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className={`${styles.serie}`}>
       <i 
-      // onClick={handleDelete}
+      onClick={handleDelete}
       className="fas fa-xmark"></i>
       <div className={`${styles.imgContainer}`}>
         <img src={`http://localhost:8000/${poster}`} alt="oneSerie" />

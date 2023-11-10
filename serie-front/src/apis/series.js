@@ -19,6 +19,28 @@ export async function addSerie(formData) {
   }
 }
 
+export async function deleteSerie(idSerie) {
+  try {
+    const response = await fetch("http://localhost:8000/deleteSerie/:idSerie", {
+      method: "DELETE",
+      body: idSerie,
+    });
+    const body = await response.json();
+    if (response.ok) {
+      return body;
+    } else {
+      if (body) {
+        throw body;
+      } else {
+        throw new Error("Error add");
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    
+  }
+}
+
 export async function getSeries(id) {
     const response = await fetch(`http://localhost:8000/getSeries`);
     return response.json();
