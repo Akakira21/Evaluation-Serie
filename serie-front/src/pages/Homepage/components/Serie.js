@@ -1,8 +1,10 @@
 import styles from "./Serie.module.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function Serie({ serie, updateSeries, deleteSeries }) {
   const { idSerie, title, poster } = serie;
-  console.log(serie);
+  // console.log(serie);
+  const navigate = useNavigate();
 
   // const handleClick = async () => {
   //   try {
@@ -47,7 +49,7 @@ export default function Serie({ serie, updateSeries, deleteSeries }) {
   }
 
   return (
-    <div className={`${styles.serie}`}>
+    <div className={`${styles.serie}`} onClick={() => navigate("/SerieDetails")}>
       <i 
       onClick={handleDelete}
       className="fas fa-xmark"></i>
