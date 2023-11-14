@@ -30,7 +30,7 @@ function SerieDetails() {
   }, [id]);
 
   return (
-    <div>
+    <div className="d-flex flex-fill">
         {isLoading ? (
 
           <Loading />

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Profile = () => {
     return (
-        <div>
+        <div className="d-flex flex-fill">
             <h1>Profile</h1>
         </div>
     );
