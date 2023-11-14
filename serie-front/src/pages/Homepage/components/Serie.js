@@ -49,7 +49,7 @@ export default function Serie({ serie, updateSeries, deleteSeries }) {
   }
 
   return (
-    <div className={`${styles.serie}`} onClick={() => navigate("/SerieDetails")}>
+    <div className={`${styles.serie}`} onClick={() => navigate(`/SerieDetails/${serie.idSerie}`, {state:{id:serie.idSerie}})}>
       <i 
       onClick={handleDelete}
       className="fas fa-xmark"></i>

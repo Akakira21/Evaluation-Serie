@@ -115,7 +115,7 @@ app.post("/login", (req, res) => {
 app.get("/getUser/:id", (req, res) => {
   console.log(req.params);
   let id = req.params.id;
-  const sql = "SELECT pseudo, email, avatar FROM users where id= ?";
+  const sql = "SELECT pseudo, email, avatar FROM users where idUser= ?";
   connection.query(sql, [id], (err, result) => {
     if (err) throw err;
     res.status(200).json(result[0]);
@@ -130,6 +130,17 @@ app.get("/getSeries", (req, res) => {
     res.json(result);
   });
 });
+
+app.get("/getDetails/:id", (req, res) => {
+  console.log(req.params);
+  const id = req.params.id;
+  const sql = "SELECT * FROM series WHERE idSerie = ?";
+  connection.query(sql, [id], (err, result) => {
+    if (err) throw err;
+    console.log("Détails série récupérés", result);
+    res.status(200).json(result);
+  })
+})
 
 app.post("/addSerie", upload.single("poster"), async (req, res) => {
   let poster;

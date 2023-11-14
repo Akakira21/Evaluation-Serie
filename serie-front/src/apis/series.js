@@ -42,6 +42,6 @@ export async function deleteSeries(idSerie) {
 }
 
 export async function getSeries(id) {
-    const response = await fetch(`http://localhost:8000/getSeries`);
-    return response.json();
-  }
+  const response = await fetch(`http://localhost:8000/getSeries`);
+  return response.json();
+}
