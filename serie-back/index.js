@@ -186,6 +186,16 @@ app.post("/addSerie", upload.single("poster"), async (req, res) => {
 app.put("/updateSerie/:id", upload.single("poster"), async (req, res) => {
   const id = req.params.id;
 
+  const sqlExistingPoster = "SELECT poster FROM series WHERE idSerie = ?"
+  connection.query(sqlExistingPoster, [id], (err, result) => {
+    if (err) throw err;
+
+    let existingPoster = null;
+    if (result.length > 0) {
+      existingPoster = result[0].poster
+    }
+
+
   let poster;
   if (req.file === undefined) {
     poster = null;
@@ -196,7 +206,7 @@ app.put("/updateSerie/:id", upload.single("poster"), async (req, res) => {
   const { title, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country } = req.body;
 
       const sqlUpdate =
-        "UPDATE series SET title=?, poster=?, year=?, resume=?, numberSeason=?, still=?, imdbNote=?, sensCritiqueNote=?, country=? WHERE id=?";
+        "UPDATE series SET title=?, poster=?, year=?, resume=?, numberSeason=?, still=?, imdbNote=?, sensCritiqueNote=?, country=? WHERE idSerie=?";
       connection.query(
         sqlUpdate,
         [title, poster || existingPoster, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country, id],
@@ -207,9 +217,9 @@ app.put("/updateSerie/:id", upload.single("poster"), async (req, res) => {
             const filePath = path.join(__dirname, "/upload", existingPoster);
             fs.unlink(filePath, (err) => {
               if (err) {
-                console.log("Error deleting file");
+                console.log("Erreur lors la suppression");
               } else {
-                console.log("File deleted");
+                console.log("Image supprimé");
               }
             });
           }
@@ -220,6 +230,7 @@ app.put("/updateSerie/:id", upload.single("poster"), async (req, res) => {
           res.status(200).json(successMessage);
         }
       );
+    })
     }
   );
 

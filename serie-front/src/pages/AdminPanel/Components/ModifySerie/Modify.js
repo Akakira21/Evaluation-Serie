@@ -44,11 +44,17 @@ function Modify() {
 
     console.log(formData);
     try {
-      const response = await fetch(`http://localhost:8000/updateSerie/${id}`)
+      const response = await fetch(`http://localhost:8000/updateSerie/${id}`, {
+        method : 'PUT',
+        body: formData,
+      });
         if (response.ok) {
           const responseData = await response.json();
           if (responseData.message) {
             setFeedback(responseData.message)
+            setTimeout(() => {
+              navigate("/adminpanel")
+            }, "1500");
           } else {
             setFeedbackGood(responseData.messageGood)
           }
@@ -89,28 +95,28 @@ function Modify() {
             <div className={styles.details}>
                 <form onSubmit={handleSubmit(submit)}>
 
-                    <h2>Title : <input {...register("title")} type="text" value={details[0].title}></input></h2>
+                    <h2>Title : <input {...register("title")} type="text" defaultValue={details[0].title}></input></h2>
 
-                    <h3>Year : <input {...register("year")} type='text' value={details[0].year}></input></h3>
+                    <h3>Year : <input {...register("year")} type='text'defaultValue={details[0].year}></input></h3>
 
                     <div className={`${styles.imgContainer}`}>
                     <img src={`http://localhost:8000/${details[0].poster}`} alt={`Poster for ${details[0].title}`}></img>
                     <input ref={posterRef} type="file"></input>
                     </div>
                     
-                    <p>Number of seasons : <input {...register("numberSeason")} type="text" value={details[0].numberSeason}></input></p>
+                    <p>Number of seasons : <input {...register("numberSeason")} type="text" defaultValue={details[0].numberSeason}></input></p>
 
                     <p>State : {details[0].still === 1 ? "Finished" : "Ongoing"}</p>
                     <label htmlFor="state">1 = finished / 0 = ongoing </label>
-                    <input {...register("still")} type="text" id="state" value={details[0].still}></input>
+                    <input {...register("still")} type="text" id="state" defaultValue={details[0].still}></input>
 
-                    <textarea className={styles.resumeBox} {...register("resume")} type="text" value={details[0].resume}></textarea>
+                    <textarea className={styles.resumeBox} {...register("resume")} type="text" defaultValue={details[0].resume}></textarea>
 
-                    <p> IMDB rating : <input {...register("imdbNote")} type="text" value={details[0].imdbNote}></input></p>
+                    <p> IMDB rating : <input {...register("imdbNote")} type="text" defaultValue={details[0].imdbNote}></input></p>
 
-                    <p> SensCritique rating : <input {...register("sensCritiqueNote")} type="text" value={details[0].sensCritiqueNote}></input></p>
+                    <p> SensCritique rating : <input {...register("sensCritiqueNote")} type="text" defaultValue={details[0].sensCritiqueNote}></input></p>
 
-                    <p>Country of origine : <input {...register("country")} type="text" value={details[0].country}></input></p>
+                    <p>Country of origine : <input {...register("country")} type="text" defaultValue={details[0].country}></input></p>
 
                     <button className="btn btn-primary">Update</button>
                     {feedback && <p className={`${styles.feedback}`}>{feedback}</p>}
