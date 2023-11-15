@@ -2,14 +2,14 @@ import React, { useRef } from 'react';
 import styles from './AdminPanel.module.scss'
 import AddSerie from './Components/AddSerie';
 import { useState } from 'react';
-import ModifySerie from './Components/ModifySerie';
+import ModifySerie from './Components/ModifySerie/ModifySerie';
 
 const AdminPanel = () => {
 
     const [ button, setButton ] = useState(0)
 
     return (
-        <div>
+        <div className='flex-fill'>
             <h1>Admin Panel</h1>
             {button === 0 ? (
                 <div className="flex-fill">

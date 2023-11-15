@@ -183,6 +183,46 @@ app.post("/addSerie", upload.single("poster"), async (req, res) => {
   });
 });
 
+app.put("/updateSerie/:id", upload.single("poster"), async (req, res) => {
+  const id = req.params.id;
+
+  let poster;
+  if (req.file === undefined) {
+    poster = null;
+  } else {
+    poster = req.file.filename;
+  }
+
+  const { title, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country } = req.body;
+
+      const sqlUpdate =
+        "UPDATE series SET title=?, poster=?, year=?, resume=?, numberSeason=?, still=?, imdbNote=?, sensCritiqueNote=?, country=? WHERE id=?";
+      connection.query(
+        sqlUpdate,
+        [title, poster || existingPoster, year, resume, numberSeason, still, imdbNote, sensCritiqueNote, country, id],
+        (err, result) => {
+          if (err) throw err;
+
+          if (poster && existingPoster) {
+            const filePath = path.join(__dirname, "/upload", existingPoster);
+            fs.unlink(filePath, (err) => {
+              if (err) {
+                console.log("Error deleting file");
+              } else {
+                console.log("File deleted");
+              }
+            });
+          }
+
+          let successMessage = {
+            message: "Mise à jour réussie !",
+          };
+          res.status(200).json(successMessage);
+        }
+      );
+    }
+  );
+
 app.delete("/deleteSerie", (req, res) => {
   const { idSerie } = req.body;
   console.log("DeleteSerie", req.body);

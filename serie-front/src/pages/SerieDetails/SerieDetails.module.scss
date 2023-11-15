@@ -1,7 +1,13 @@
 .details {
-    text-align: center;
+    display: flex;
+    flex-flow: column;
     img {
         height: 250px;
         margin: 0.5rem;
     }
+}
+
+.resumeBox {
+    width: 30rem;
+    height: 10rem;
 }

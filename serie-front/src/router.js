@@ -11,6 +11,7 @@ const Login = lazy(() => import('./pages/Forms/Login/Login'))
 const Register = lazy(() => import('./pages/Forms/Register/Register'))
 const SerieDetails = lazy(() => import('./pages/SerieDetails/SerieDetails'))
 const AdminPanel = lazy(() => import('./pages/AdminPanel/AdminPanel'))
+const Modify = lazy(() => import('./pages/AdminPanel/Components/ModifySerie/Modify'))
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +51,11 @@ export const router = createBrowserRouter([
             {
                 path: "/adminpanel",
                 element: <AdminPanel />,
+        
+            },
+            {
+                path: "/modify/:id",
+                element: <Modify />,
         
             },
         ]
